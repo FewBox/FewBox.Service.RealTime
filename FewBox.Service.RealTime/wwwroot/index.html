@@ -27,7 +27,7 @@
     <script type="text/javascript">
         let notify = document.getElementById('notify');
         notify.addEventListener("click", function () {
-            connection.invoke("Notify", "fewbox", "Go go go!").catch(err => console.error(err));
+            connection.invoke("NotifyAll", "fewbox", "Go go go!").catch(err => console.error(err));
         });
     </script>
 </body>
