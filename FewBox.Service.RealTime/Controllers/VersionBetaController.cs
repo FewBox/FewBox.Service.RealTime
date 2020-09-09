@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Mvc;
+/*using Microsoft.AspNetCore.Mvc;
 
 namespace FewBox.Service.RealTime.Controllers
 {
@@ -13,4 +13,4 @@ namespace FewBox.Service.RealTime.Controllers
             return "2.0 beta";
         }
     }
-}
+}*/

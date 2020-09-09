@@ -1,4 +1,4 @@
-using AutoMapper;
+/*using AutoMapper;
 using FewBox.Core.Web.Controller;
 using FewBox.Service.RealTime.Model.Dtos;
 using FewBox.Service.RealTime.Model.Entities;
@@ -17,4 +17,4 @@ namespace FewBox.Service.RealTime.Controllers
             // SQLite ID must be Upcase.
         }
     }
-}
+}*/
