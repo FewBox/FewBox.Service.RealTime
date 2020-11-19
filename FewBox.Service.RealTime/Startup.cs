@@ -11,6 +11,7 @@ using FewBox.Service.RealTime.Model.Repositories;
 using FewBox.Service.RealTime.Repository;
 using FewBox.Service.RealTime.Hubs;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 
 namespace FewBox.Service.RealTime
 {
@@ -28,7 +29,7 @@ namespace FewBox.Service.RealTime
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddFewBox(FewBoxDBType.SQLite, new ApiVersion(1, 0, "alpha1")); // Todo: Need to change to MySQL.
+            services.AddFewBox(FewBoxDBType.SQLite, FewBoxAuthType.Payload, new ApiVersion(1, 0, "alpha1")); // Todo: Need to change to MySQL.
             services.AddOpenApiDocument(config =>
             {
                 this.InitAspNetCoreOpenApiDocumentGeneratorSettings(config, "v1", new[] { "1-alpha1", "1-beta1", "1" }, "v1");
@@ -39,36 +40,10 @@ namespace FewBox.Service.RealTime
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            app.UseHttpsRedirection();
-            app.UseRouting();
-            app.UseAuthentication();
-            app.UseAuthorization();
-            app.UseOpenApi();
-            app.UseStaticFiles();
-            if (env.IsDevelopment())
-            {
-                app.UseCors("dev");
-                app.UseSwaggerUi3();
-                app.UseDeveloperExceptionPage();
-            }
-            else
-            {
-                app.UseCors();
-            }
-            if (env.IsStaging())
-            {
-                app.UseSwaggerUi3();
-                app.UseDeveloperExceptionPage();
-            }
-            if (env.IsProduction())
-            {
-                app.UseReDoc(c => c.DocumentPath = "/swagger/v1/swagger.json");
-                app.UseHsts();
-            }
+            app.UseFewBox(new List<string> { "/swagger/v1/swagger.json" });
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapHub<NotificationHub>("notificationHub");
-                endpoints.MapControllers();
             });
         }
 
