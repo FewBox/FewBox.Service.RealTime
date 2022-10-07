@@ -9,7 +9,7 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceFolder}/FewBox.Service.RealTime/bin/Debug/netcoreapp3.1/FewBox.Service.RealTime.dll",
+            "program": "${workspaceFolder}/FewBox.Service.RealTime/bin/Debug/netcoreapp6.0/FewBox.Service.RealTime.dll",
             "args": [],
             "cwd": "${workspaceFolder}/FewBox.Service.RealTime",
             "stopAtEntry": false,
