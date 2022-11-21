@@ -6,9 +6,9 @@ DOCKER_REPO_PORT=5000
 dotnet restore $PROJECTNAME
 # dotnet clean $PROJECTNAME
 dotnet publish -c Release $PROJECTNAME/$PROJECTNAME.csproj
-cp Nas/* ./$PROJECTNAME/bin/Release/netcoreapp6.0/publish
-cp .dockerignore ./$PROJECTNAME/bin/Release/netcoreapp6.0/publish/.dockerignore
-cd $PROJECTNAME/bin/Release/netcoreapp6.0/publish
+cp Nas/* ./$PROJECTNAME/bin/Release/net6.0/publish
+cp .dockerignore ./$PROJECTNAME/bin/Release/net6.0/publish/.dockerignore
+cd $PROJECTNAME/bin/Release/net6.0/publish
 echo '*** docker folder ***'
 pwd
 echo '*** docker files ***'
