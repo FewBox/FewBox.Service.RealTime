@@ -1,6 +1,5 @@
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using AutoMapper;
+using FewBox.SDK.Realtime;
 using FewBox.Service.RealTime.Model.Dtos;
 using FewBox.Service.RealTime.Model.Entities;
 
@@ -12,6 +11,7 @@ namespace FewBox.Service.RealTime.AutoMapperProfiles
         {
             CreateMap<App, AppDto>();
             CreateMap<AppPersistantDto, App>();
+            CreateMap<AllRealtimeMessageDto, AllRealtimeMessage>();
         }
     }
 }

@@ -1,0 +1,33 @@
+{
+  "name": "fewbox-realtime-test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.ts",
+  "scripts": {
+    "dev": "next dev -p 80",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@fewbox/den-web": "^0.0.12",
+    "@microsoft/signalr": "^7.0.3",
+    "@paypal/react-paypal-js": "^7.8.2",
+    "@sentry/browser": "^7.41.0",
+    "core-decorators": "^0.20.0",
+    "jwt-decode": "^3.1.2",
+    "next": "^13.2.3",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-ga4": "^2.1.0",
+    "react-intl": "^6.2.10",
+    "rxjs": "^7.8.0"
+  },
+  "devDependencies": {
+    "@svgr/webpack": "^6.5.1",
+    "@types/node": "^18.14.6",
+    "@types/react": "^18.0.28",
+    "sass": "^1.58.3",
+    "typescript": "^4.9.5"
+  }
+}

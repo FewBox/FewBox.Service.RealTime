@@ -2,7 +2,8 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
+using FewBox.SDK.Extension;
+using FewBox.SDK.Realtime;
 using NSwag;
 using NSwag.Generation.Processors.Security;
 using NSwag.Generation.AspNetCore;
@@ -17,6 +18,16 @@ namespace FewBox.Service.RealTime
 {
     public class Startup
     {
+        private IList<ApiVersionDocument> ApiVersionDocuments = new List<ApiVersionDocument> {
+                new ApiVersionDocument{
+                    ApiVersion = new Microsoft.AspNetCore.Mvc.ApiVersion(1, 0),
+                    IsDefault = true
+                },
+                new ApiVersionDocument{
+                    ApiVersion = new Microsoft.AspNetCore.Mvc.ApiVersion(2, 0, "alpha1"),
+                    IsDefault = false
+                }
+            };
         public Startup(IConfiguration configuration, IWebHostEnvironment environment)
         {
             this.Configuration = configuration;
@@ -29,61 +40,28 @@ namespace FewBox.Service.RealTime
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddFewBox(FewBoxDBType.SQLite, FewBoxAuthType.Payload, new ApiVersion(1, 0, "alpha1")); // Todo: Need to change to MySQL.
-            services.AddOpenApiDocument(config =>
-            {
-                this.InitAspNetCoreOpenApiDocumentGeneratorSettings(config, "v1", new[] { "1-alpha1", "1-beta1", "1" }, "v1");
-            });
+            //services.AddFewBoxSDKWeb(MQConsumerType.Realtime); Todo
+            services.AddFewBox(this.ApiVersionDocuments, FewBoxDBType.SQLite, FewBoxAuthType.Payload);
             // Biz
             services.AddScoped<IAppRepository, AppRepository>();
+            services.AddScoped<IMQRealtimeHandler<AllExceptRealtimeMessage>, MQAllExceptRealtimeMessageHandler>();
+            services.AddScoped<IMQRealtimeHandler<AllRealtimeMessage>, MQAllRealtimeMessageHandler>();
+            services.AddScoped<IMQRealtimeHandler<ClientRealtimeMessage>, MQClientRealtimeMessageHandler>();
+            services.AddScoped<IMQRealtimeHandler<ClientsRealtimeMessage>, MQClientsRealtimeMessageHandler>();
+            services.AddScoped<IMQRealtimeHandler<GroupExceptRealtimeMessage>, MQGroupExceptRealtimeMessageHandler>();
+            services.AddScoped<IMQRealtimeHandler<GroupRealtimeMessage>, MQGroupRealtimeMessageHandler>();
+            services.AddScoped<IMQRealtimeHandler<GroupsRealtimeMessage>, MQGroupsRealtimeMessageHandler>();
+            services.AddScoped<IMQRealtimeHandler<UserRealtimeMessage>, MQUserRealtimeMessageHandler>();
+            services.AddScoped<IMQRealtimeHandler<UsersRealtimeMessage>, MQUsersRealtimeMessageHandler>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            app.UseFewBox(new List<string> { "/swagger/v1/swagger.json" });
+            app.UseFewBox(this.ApiVersionDocuments);
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapHub<NotificationHub>("notificationHub");
+                endpoints.MapHub<FewBoxHub>("fewbox");
             });
-        }
-
-        private void InitAspNetCoreOpenApiDocumentGeneratorSettings(AspNetCoreOpenApiDocumentGeneratorSettings config, string documentName, string[] apiGroupNames, string documentVersion)
-        {
-            config.DocumentName = documentName;
-            config.ApiGroupNames = apiGroupNames;
-            config.PostProcess = document =>
-            {
-                this.InitDocumentInfo(document, documentVersion);
-            };
-            config.OperationProcessors.Add(new OperationSecurityScopeProcessor("JWT"));
-            config.DocumentProcessors.Add(
-                new SecurityDefinitionAppender("JWT", new OpenApiSecurityScheme
-                {
-                    Type = OpenApiSecuritySchemeType.ApiKey,
-                    Name = "Authorization",
-                    Description = "Bearer [Token]",
-                    In = OpenApiSecurityApiKeyLocation.Header
-                })
-            );
-        }
-
-        private void InitDocumentInfo(OpenApiDocument document, string version)
-        {
-            document.Info.Version = version;
-            document.Info.Title = "FewBox Demo Api";
-            document.Info.Description = "FewBox shipping, for more information please visit the 'https://fewbox.com'";
-            document.Info.TermsOfService = "https://fewbox.com/terms";
-            document.Info.Contact = new OpenApiContact
-            {
-                Name = "FewBox",
-                Email = "support@fewbox.com",
-                Url = "https://fewbox.com/support"
-            };
-            document.Info.License = new OpenApiLicense
-            {
-                Name = "Use under license",
-                Url = "https://fewbox.com/license"
-            };
         }
     }
 }

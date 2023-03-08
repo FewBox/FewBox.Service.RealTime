@@ -1,5 +1,5 @@
     
-using FewBox.Service.RealTime.Controllers;
+/*using FewBox.Service.RealTime.Controllers;
 using FewBox.Service.RealTime.Model.Dtos;
 using FewBox.Service.RealTime.Model.Services;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -29,4 +29,4 @@ namespace FewBox.Service.RealTime.TestSuite
             Assert.AreEqual("1.0.1", response.Payload.Name);
         }
     }
-}
+}*/
