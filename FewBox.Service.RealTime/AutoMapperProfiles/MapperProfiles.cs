@@ -11,7 +11,15 @@ namespace FewBox.Service.RealTime.AutoMapperProfiles
         {
             CreateMap<App, AppDto>();
             CreateMap<AppPersistantDto, App>();
+            CreateMap<AllExceptRealtimeMessageDto, AllExceptRealtimeMessage>();
             CreateMap<AllRealtimeMessageDto, AllRealtimeMessage>();
+            CreateMap<ClientRealtimeMessageDto, ClientRealtimeMessage>();
+            CreateMap<ClientsRealtimeMessageDto, ClientsRealtimeMessage>();
+            CreateMap<GroupExceptRealtimeMessageDto, GroupExceptRealtimeMessage>();
+            CreateMap<GroupRealtimeMessageDto, GroupRealtimeMessage>();
+            CreateMap<GroupsRealtimeMessageDto, GroupsRealtimeMessage>();
+            CreateMap<UserRealtimeMessageDto, UserRealtimeMessage>();
+            CreateMap<UsersRealtimeMessageDto, UsersRealtimeMessage>();
         }
     }
 }

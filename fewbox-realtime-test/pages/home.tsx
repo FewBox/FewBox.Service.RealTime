@@ -6,11 +6,13 @@ export interface IHomePageProps {
 
 const getArgValue = (arg: any) => {
     if (typeof (arg) == 'object') {
-        debugger;
         return JSON.stringify(arg);
     }
-    else {
+    else if ((typeof (arg) == 'string')) {
         return arg;
+    }
+    else {
+        return '';
     }
 }
 
@@ -18,15 +20,15 @@ const HomePage = (props: IHomePageProps) => {
     const [realtimeMessage, setRealtimeMessage] = useState({ all: 'None' });
     useEffect(() => {
         if (window.connection) {
-            window.connection.on("all", (arg1: any, arg2: any, arg3: any, arg4: any, arg5: any, arg6: any, arg7: any, arg8: any, arg9: any, arg10: any) => {
-                setRealtimeMessage({ ...realtimeMessage, all: `${getArgValue(arg1)} ${arg2} ${arg3} ${arg4} ${arg5} ${arg6} ${arg7} ${arg8} ${arg9} ${arg10}` })
+            window.connection.on("fewbox", (arg1: any, arg2: any, arg3: any, arg4: any, arg5: any, arg6: any, arg7: any, arg8: any, arg9: any, arg10: any) => {
+                setRealtimeMessage({ ...realtimeMessage, all: `${getArgValue(arg1)}${getArgValue(arg2)}${getArgValue(arg3)}${getArgValue(arg4)}${getArgValue(arg5)}${getArgValue(arg6)}${getArgValue(arg7)}${getArgValue(arg8)}${getArgValue(arg9)}${getArgValue(arg10)}` })
             });
         }
     }, []);
     return (<Den.Components.Y padding='2em' cross={Den.Components.YCrossType.Center}>
         <Den.Components.VLabel size={Den.Components.SizeType.Large} caption={realtimeMessage.all} />
         <Den.Components.VForm handleSubmit={(data) => {
-            window.connection.invoke('SendAll', data.arg1, data.arg2)
+            window.connection.invoke('SendAll10', 'fewbox', data.arg1, data.arg2, data.arg3, data.arg4, data.arg5, data.arg6, data.arg7, data.arg8, data.arg9, data.arg10)
                 .then(() => { console.log('Finished!'); });
         }}>
             <Den.Components.Y gap='1em' width='20em'>

@@ -14,7 +14,7 @@ export default function FewBoxApp({ Component, pageProps }: AppProps) {
             connection.start()
                 .then(() => {
                     // Todo
-                    connection.invoke('SendAll', 'all', '{name:"xxx"}')
+                    connection.invoke('SendAll'/* Hub Method */, 'fewbox' /* Listner Method */, {"name":"xxx"})
                 })
                 .catch((err) => console.error(err));
         }
