@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.SignalR;
 
 namespace FewBox.Service.RealTime.Hubs
 {
-    public class MQGroupsRealtimeMessageHandler : IMQRealtimeHandler<GroupsRealtimeMessage>
+    public class MQGroupsRealtimeMessageHandler : MQRealtimeMessageHandler, IMQRealtimeHandler<GroupsRealtimeMessage>
     {
         private IHubContext<FewBoxHub> HubContext { get; set; }
         public MQGroupsRealtimeMessageHandler(IHubContext<FewBoxHub> hubContext)
@@ -16,7 +16,10 @@ namespace FewBox.Service.RealTime.Hubs
         {
             return (realtimeMessage) =>
             {
-                this.HubContext.Clients.Groups(realtimeMessage.GroupNames).SendAsync(realtimeMessage.Method, realtimeMessage.Arg1, realtimeMessage.Arg2, realtimeMessage.Arg3, realtimeMessage.Arg4, realtimeMessage.Arg5, realtimeMessage.Arg6, realtimeMessage.Arg7, realtimeMessage.Arg8, realtimeMessage.Arg9, realtimeMessage.Arg10);
+                SendMessageWrapper(() =>
+                {
+                    this.HubContext.Clients.Groups(realtimeMessage.GroupNames).SendAsync(realtimeMessage.Method, realtimeMessage.Arg1, realtimeMessage.Arg2, realtimeMessage.Arg3, realtimeMessage.Arg4, realtimeMessage.Arg5, realtimeMessage.Arg6, realtimeMessage.Arg7, realtimeMessage.Arg8, realtimeMessage.Arg9, realtimeMessage.Arg10);
+                });
                 return true;
             };
         }

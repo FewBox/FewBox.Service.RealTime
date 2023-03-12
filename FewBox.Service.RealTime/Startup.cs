@@ -40,7 +40,7 @@ namespace FewBox.Service.RealTime
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //services.AddFewBoxSDKWeb(MQConsumerType.Realtime); Todo
+            services.AddFewBoxSDKWeb(MQConsumerType.Realtime);
             services.AddFewBox(this.ApiVersionDocuments, FewBoxDBType.SQLite, FewBoxAuthType.Payload);
             // Biz
             services.AddScoped<IAppRepository, AppRepository>();
