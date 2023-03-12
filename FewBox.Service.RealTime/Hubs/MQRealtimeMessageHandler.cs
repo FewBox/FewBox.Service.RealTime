@@ -12,7 +12,7 @@ namespace FewBox.Service.RealTime.Hubs
             }
             catch (Exception exception)
             {
-
+                Console.WriteLine(exception.Message);
             }
         }
     }
