@@ -40,19 +40,19 @@ namespace FewBox.Service.RealTime
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddFewBoxSDKWeb(MQConsumerType.Realtime);
+            services.AddFewBoxSDK(MQConsumerType.Realtime);
             services.AddFewBox(this.ApiVersionDocuments, FewBoxDBType.SQLite, FewBoxAuthType.Payload);
             // Biz
             services.AddScoped<IAppRepository, AppRepository>();
-            services.AddScoped<IMQRealtimeHandler<AllExceptRealtimeMessage>, MQAllExceptRealtimeMessageHandler>();
-            services.AddScoped<IMQRealtimeHandler<AllRealtimeMessage>, MQAllRealtimeMessageHandler>();
-            services.AddScoped<IMQRealtimeHandler<ClientRealtimeMessage>, MQClientRealtimeMessageHandler>();
-            services.AddScoped<IMQRealtimeHandler<ClientsRealtimeMessage>, MQClientsRealtimeMessageHandler>();
-            services.AddScoped<IMQRealtimeHandler<GroupExceptRealtimeMessage>, MQGroupExceptRealtimeMessageHandler>();
-            services.AddScoped<IMQRealtimeHandler<GroupRealtimeMessage>, MQGroupRealtimeMessageHandler>();
-            services.AddScoped<IMQRealtimeHandler<GroupsRealtimeMessage>, MQGroupsRealtimeMessageHandler>();
-            services.AddScoped<IMQRealtimeHandler<UserRealtimeMessage>, MQUserRealtimeMessageHandler>();
-            services.AddScoped<IMQRealtimeHandler<UsersRealtimeMessage>, MQUsersRealtimeMessageHandler>();
+            services.AddSingleton<IMQRealtimeHandler<AllExceptRealtimeMessage>, MQAllExceptRealtimeMessageHandler>();
+            services.AddSingleton<IMQRealtimeHandler<AllRealtimeMessage>, MQAllRealtimeMessageHandler>();
+            services.AddSingleton<IMQRealtimeHandler<ClientRealtimeMessage>, MQClientRealtimeMessageHandler>();
+            services.AddSingleton<IMQRealtimeHandler<ClientsRealtimeMessage>, MQClientsRealtimeMessageHandler>();
+            services.AddSingleton<IMQRealtimeHandler<GroupExceptRealtimeMessage>, MQGroupExceptRealtimeMessageHandler>();
+            services.AddSingleton<IMQRealtimeHandler<GroupRealtimeMessage>, MQGroupRealtimeMessageHandler>();
+            services.AddSingleton<IMQRealtimeHandler<GroupsRealtimeMessage>, MQGroupsRealtimeMessageHandler>();
+            services.AddSingleton<IMQRealtimeHandler<UserRealtimeMessage>, MQUserRealtimeMessageHandler>();
+            services.AddSingleton<IMQRealtimeHandler<UsersRealtimeMessage>, MQUsersRealtimeMessageHandler>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
