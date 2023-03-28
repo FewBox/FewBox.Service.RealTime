@@ -1,4 +1,5 @@
 using System;
+using Newtonsoft.Json;
 
 namespace FewBox.Service.RealTime.Hubs
 {
@@ -14,6 +15,12 @@ namespace FewBox.Service.RealTime.Hubs
             {
                 Console.WriteLine(exception.Message);
             }
+        }
+        
+        protected string Convert(object inputObject)
+        {
+            string jsonString = JsonConvert.SerializeObject(inputObject);
+            return jsonString;
         }
     }
 }

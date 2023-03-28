@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.SignalR;
@@ -8,6 +9,7 @@ namespace FewBox.Service.RealTime.Hubs
     //[Authorize(Policy="JWTRole_Hub")]
     public class FewBoxHub : Hub
     {
+        private readonly static ConnectionMapping<string> Connections = new ConnectionMapping<string>();
 #nullable enable
 
         public async Task SendAll(string method, object? arg1)
@@ -499,5 +501,19 @@ namespace FewBox.Service.RealTime.Hubs
         {
             await this.Groups.RemoveFromGroupAsync(this.Context.ConnectionId, groupName);
         }
+
+        /*public override Task OnConnectedAsync()
+        {
+            string name = this.Context.User.Identity.Name;
+            Connections.Add(name, Context.ConnectionId);
+            return base.OnConnectedAsync();
+        }
+
+        public override Task OnDisconnectedAsync(Exception? exception)
+        {
+            string name = Context.User.Identity.Name;
+            Connections.Remove(name, Context.ConnectionId);
+            return base.OnDisconnectedAsync(exception);
+        }*/
     }
 }
