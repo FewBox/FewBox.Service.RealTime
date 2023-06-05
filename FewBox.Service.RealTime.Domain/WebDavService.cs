@@ -41,5 +41,10 @@ namespace FewBox.Service.RealTime.Domain
                 }
             }
         }
+
+        public string GetFileUrl(string fileName)
+        {
+            return $"{this.RealtimeConfig.WebDav.Url}/{fileName}";
+        }
     }
 }
