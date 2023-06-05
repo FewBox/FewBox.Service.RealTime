@@ -4,15 +4,14 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using FewBox.SDK.Extension;
 using FewBox.SDK.Realtime;
-using NSwag;
-using NSwag.Generation.Processors.Security;
-using NSwag.Generation.AspNetCore;
 using FewBox.Core.Web.Extension;
 using FewBox.Service.RealTime.Model.Repositories;
 using FewBox.Service.RealTime.Repository;
 using FewBox.Service.RealTime.Hubs;
-using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using FewBox.Service.RealTime.Model.Configs;
+using FewBox.Service.RealTime.Model.Services;
+using FewBox.Service.RealTime.Domain;
 
 namespace FewBox.Service.RealTime
 {
@@ -42,6 +41,9 @@ namespace FewBox.Service.RealTime
         {
             services.AddFewBoxSDK(MQConsumerType.Realtime);
             services.AddFewBox(this.ApiVersionDocuments, FewBoxDBType.SQLite, FewBoxAuthType.Payload);
+            // Config
+            var realtimeConfig = this.Configuration.GetSection("Realtime").Get<RealtimeConfig>();
+            services.AddSingleton(realtimeConfig);
             // Biz
             services.AddScoped<IAppRepository, AppRepository>();
             services.AddSingleton<IMQRealtimeHandler<AllExceptRealtimeMessage>, MQAllExceptRealtimeMessageHandler>();
@@ -53,6 +55,7 @@ namespace FewBox.Service.RealTime
             services.AddSingleton<IMQRealtimeHandler<GroupsRealtimeMessage>, MQGroupsRealtimeMessageHandler>();
             services.AddSingleton<IMQRealtimeHandler<UserRealtimeMessage>, MQUserRealtimeMessageHandler>();
             services.AddSingleton<IMQRealtimeHandler<UsersRealtimeMessage>, MQUsersRealtimeMessageHandler>();
+            services.AddSingleton<IWebDavService, WebDavService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

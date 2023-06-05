@@ -1,4 +1,4 @@
-using FewBox.Service.RealTime.Model.Configs;
+/*using FewBox.Service.RealTime.Model.Configs;
 using FewBox.Service.RealTime.Model.Dtos;
 using FewBox.Service.RealTime.Model.Services;
 
@@ -19,4 +19,4 @@ namespace FewBox.Service.RealTime.Domain
             };
         }
     }
-}
+}*/
