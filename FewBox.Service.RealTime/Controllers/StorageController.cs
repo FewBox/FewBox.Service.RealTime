@@ -25,10 +25,10 @@ namespace FewBox.Service.RealTime.Controllers
             if (formFile.Length > 0)
             {
                 byte[] fileData;
-                using (var stream = new MemoryStream())
+                using (var inputStream = new MemoryStream())
                 {
-                    await formFile.CopyToAsync(stream);
-                    fileData = stream.ToArray();
+                    await formFile.CopyToAsync(inputStream);
+                    fileData = inputStream.ToArray(); // Original
                 }
                 await this.WebDavService.UploadFile(formFile.FileName, fileData);
             }
